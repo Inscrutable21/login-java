@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign Up</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+        .card {
+            border: none;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        .card-header {
+            background: #4a6fdc;
+            border-bottom: none;
+            padding: 1.5rem;
+        }
+        h3 {
+            font-weight: 700;
+            color: #fff;
+            margin: 0;
+        }
+        .form-control {
+            border-radius: 8px;
+            padding: 0.75rem;
+            border: 1px solid #e0e0e0;
+            background-color: #f8f9fa;
+        }
+        .form-control:focus {
+            border-color: #4a6fdc;
+            box-shadow: 0 0 0 0.2rem rgba(74, 111, 220, 0.25);
+        }
+        .input-group-text {
+            background-color: #f8f9fa;
+            border-right: none;
+            border-radius: 8px 0 0 8px;
+        }
+        .input-group .form-control {
+            border-left: none;
+            border-radius: 0 8px 8px 0;
+        }
+        .btn-primary {
+            background-color: #4a6fdc;
+            border-color: #4a6fdc;
+            border-radius: 8px;
+            padding: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 6px rgba(74, 111, 220, 0.25);
+        }
+        .btn-primary:hover {
+            background-color: #3a5dbe;
+            border-color: #3a5dbe;
+            transform: translateY(-2px);
+        }
+        .alert, .text-danger {
+            border-radius: 8px;
+            padding: 0.5rem;
+        }
+        a {
+            color: #4a6fdc;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .card-body {
+            padding: 2rem;
+        }
+        .form-label {
+            font-weight: 500;
+        }
+        .text-highlight {
+            color: #4a6fdc;
+            font-weight: 600;
+        }
+        .animate-card {
+            animation: fadeIn 0.6s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-5">
+                <div class="card animate-card">
+                    <div class="card-header text-center">
+                        <h3>Create Account</h3>
+                    </div>
+                    <div class="card-body">
+                        <div th:if="${error}" class="alert alert-danger">
+                            <i class="fas fa-exclamation-circle me-2"></i><span th:text="${error}"></span>
+                        </div>
+                        
+                        <form th:action="@{/register}" th:object="${user}" method="post">
+                            <div class="mb-3">
+                                <label for="username" class="form-label">Username</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                    <input type="text" class="form-control" id="username" th:field="*{username}" required placeholder="Choose a username">
+                                </div>
+                                <div class="text-danger mt-1" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                    <input type="email" class="form-control" id="email" th:field="*{email}" required placeholder="Enter your email">
+                                </div>
+                                <div class="text-danger mt-1" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+                            </div>
+                            <div class="mb-4">
+                                <label for="password" class="form-label">Password</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                    <input type="password" class="form-control" id="password" th:field="*{password}" required placeholder="Create a password">
+                                </div>
+                                <div class="text-danger mt-1" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+                            </div>
+                            <div class="d-grid mb-4">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-user-plus me-2"></i>Sign Up
+                                </button>
+                            </div>
+                        </form>
+                        
+                        <div class="text-center">
+                            <p>Already have an account? <a th:href="@{/login}" class="text-highlight">Login</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
